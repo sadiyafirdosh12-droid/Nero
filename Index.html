@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NERO — Public Beta</title>
+<style>
+:root{--bg:#080d1c;--panel:#101a30;--panel2:#14213b;--line:#263653;--text:#edf2ff;--muted:#9baac5;--blue:#91b9ff;--lav:#c1b5ff;--green:#75d9b0;--red:#ff8e9b;--amber:#f2c879}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 85% 0%,#172449 0,transparent 35%),var(--bg);color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}
+.wrap{max-width:1180px;margin:auto;padding:28px 20px 60px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:26px}.brand{display:flex;align-items:center;gap:12px}.logo{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,#8cbaff,#c7b8ff);color:#091225;display:grid;place-items:center;font-weight:900;font-size:20px}.brand h1{margin:0;font-size:24px;letter-spacing:2px}.sub{color:var(--muted);font-size:12px;letter-spacing:1.4px}.tag{border:1px solid #53658b;color:#c5d7ff;border-radius:999px;padding:6px 11px;font-size:11px;letter-spacing:1px}
+h2{font-size:19px;margin:0 0 4px}.intro{color:var(--muted);margin:0 0 22px;max-width:760px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.card,.panel{background:linear-gradient(160deg,rgba(20,33,59,.96),rgba(13,23,42,.96));border:1px solid var(--line);border-radius:18px;padding:18px}.metric label{display:block;color:var(--muted);font-size:12px}.metric strong{display:block;font-size:27px;margin-top:6px;letter-spacing:-.5px}.metric small{color:var(--muted)}.positive{color:var(--green)}.negative{color:var(--red)}
+.layout{display:grid;grid-template-columns:1.05fr .95fr;gap:14px;margin-top:14px}.panel h3{margin:0 0 5px;font-size:16px}.hint{color:var(--muted);font-size:12px;margin:0 0 14px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field label{display:block;color:#b5c3dc;font-size:12px;margin-bottom:5px}.field input,.field select{width:100%;background:#0a1326;color:var(--text);border:1px solid #314361;border-radius:10px;padding:11px;font:inherit;outline:none}.field input:focus,.field select:focus{border-color:var(--blue)}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:13px}button,.filebtn{border:0;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer;font:inherit}.primary{background:linear-gradient(100deg,#9bc3ff,#c8baff);color:#0b1428}.secondary{background:#1a2946;color:#dce7ff;border:1px solid #3a4e70}.danger{background:#38202e;color:#ffb9c1;border:1px solid #69404e}button:hover,.filebtn:hover{filter:brightness(1.08)}input[type=file]{display:none}
+.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:12px}table{border-collapse:collapse;width:100%;min-width:600px;font-size:13px}th,td{text-align:left;padding:10px 12px;border-bottom:1px solid #263653}th{color:#aebed8;background:#111e35;font-weight:600}td{color:#e3ebfb}tr:last-child td{border-bottom:0}
+.result{margin-top:14px}.status{display:inline-block;border-radius:999px;padding:4px 9px;font-size:11px;font-weight:700;letter-spacing:.6px}.status.profit{background:#173d38;color:#8ee5c5}.status.loss{background:#492631;color:#ffabb5}.status.neutral{background:#28334b;color:#c5d2e9}.insight{padding:12px 13px;background:#0c172b;border:1px solid #263653;border-radius:12px;margin-top:9px}.insight strong{display:block;margin-bottom:3px}.insight p{margin:0;color:#bac8df;font-size:13px}.notice{margin-top:14px;border:1px solid #5a4b2c;background:#292313;color:#ead6a7;padding:12px 14px;border-radius:12px;font-size:12px}.empty{padding:20px;text-align:center;color:var(--muted)}.small{font-size:11px;color:var(--muted)}.bar{height:8px;background:#24334e;border-radius:99px;overflow:hidden;margin-top:7px}.bar span{display:block;height:100%;background:linear-gradient(90deg,#8fbaff,#c3b7ff);border-radius:99px}
+@media(max-width:800px){.grid{grid-template-columns:repeat(2,1fr)}.layout{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}}@media(max-width:430px){.wrap{padding:20px 13px 40px}.grid{gap:8px}.card{padding:13px}.metric strong{font-size:22px}.formgrid{grid-template-columns:1fr}}
+
+.analysis-section{margin:16px 0 18px;padding-top:12px;border-top:1px solid #26364d}
+.section-heading{display:flex;justify-content:space-between;gap:12px;align-items:baseline;margin-bottom:8px}
+.section-heading strong{font-size:14px;letter-spacing:.02em}
+.analysis-section .insight{margin:8px 0}
+.analysis-section .insight p{margin:5px 0 0;line-height:1.5}
+.analysis-section .small{display:block;margin-top:4px;color:#9aabc2;font-size:12px}
+.analysis-top{margin-bottom:8px}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+ <div class="brand"><div class="logo">N</div><div><h1>NERO</h1><div class="sub">BUSINESS PERFORMANCE ANALYTICS</div></div></div>
+ <span class="tag">PUBLIC BETA · v1.2</span>
+</header>
+<h2>Understand what changed in your business.</h2>
+<p class="intro">Add monthly performance figures or upload a CSV. NERO compares periods, calculates profit or loss, and highlights the biggest measurable changes that may explain the result.</p>
+
+<section class="grid" aria-label="Key metrics">
+ <div class="card metric"><label>Revenue</label><strong id="revenue">₹0</strong><small id="revenueChange">No data yet</small></div>
+ <div class="card metric"><label>Total costs</label><strong id="costs">₹0</strong><small id="costChange">No data yet</small></div>
+ <div class="card metric"><label>Net profit / loss</label><strong id="profit">₹0</strong><small id="profitChange">Add data to analyse</small></div>
+ <div class="card metric"><label>Profit margin</label><strong id="margin">—</strong><small>Net profit ÷ revenue</small></div>
+</section>
+
+<section class="panel" style="margin-top:14px">
+ <h3>Choose your business type</h3>
+ <p class="hint">NERO will tailor its investigation prompts to the business model. This does not prove the cause of a change; it tells you which metrics to inspect.</p>
+ <div class="field">
+  <label for="businessType">Type of business</label>
+  <select id="businessType">
+   <option value="ecommerce">E-commerce / Online store</option>
+   <option value="performance">Performance marketing / Affiliate marketing</option>
+   <option value="retail">Retail / Physical store</option>
+   <option value="saas">SaaS / Software</option>
+   <option value="agency">Marketing / Creative / Professional agency</option>
+   <option value="services">Other services / Consultancy</option>
+   <option value="food">Restaurant / Food / Hospitality</option>
+   <option value="manufacturing">Manufacturing</option>
+   <option value="subscription">Subscription business</option>
+   <option value="marketplace">Marketplace / Platform</option>
+   <option value="education">Education / Coaching</option>
+   <option value="healthcare">Healthcare / Clinic</option>
+   <option value="logistics">Logistics / Delivery</option>
+   <option value="realestate">Real estate</option>
+   <option value="other">Other business</option>
+  </select>
+ </div>
+ <div class="insight" id="businessGuidance"><strong>Recommended metrics</strong><p>Select a business type to see relevant metrics and investigation areas.</p></div>
+</section>
+
+<div class="layout">
+ <section class="panel">
+  <h3>Add a monthly record</h3><p class="hint">Enter one month at a time. Use the same currency for all records.</p>
+  <div class="formgrid">
+   <div class="field"><label for="period">Month / period</label><input id="period" type="month"></div>
+   <div class="field"><label for="currency">Currency</label><select id="currency"><option value="INR">INR (₹)</option><option value="USD">USD ($)</option><option value="EUR">EUR (€)</option><option value="GBP">GBP (£)</option></select></div>
+   <div class="field"><label for="revenueInput">Revenue</label><input id="revenueInput" type="number" min="0" step="0.01" placeholder="e.g. 150000"></div>
+   <div class="field"><label for="costInput">Total costs</label><input id="costInput" type="number" min="0" step="0.01" placeholder="e.g. 110000"></div>
+   <div class="field"><label for="clicksInput">Clicks (optional)</label><input id="clicksInput" type="number" min="0" step="1" placeholder="e.g. 12000"></div>
+   <div class="field"><label for="conversionsInput">Conversions (optional)</label><input id="conversionsInput" type="number" min="0" step="1" placeholder="e.g. 420"></div>
+  </div>
+  <div class="actions"><button class="primary" id="addBtn">Add record</button><button class="secondary" id="sampleBtn">Load sample data</button></div>
+ </section>
+ <section class="panel">
+  <h3>Import CSV</h3><p class="hint">CSV columns required: period, revenue, costs. Optional: clicks, conversions. Example period: 2026-01.</p>
+  <label class="filebtn secondary" for="csvFile">Choose CSV file</label><input id="csvFile" type="file" accept=".csv,text/csv">
+  <div class="actions"><button class="secondary" id="exportBtn">Export records</button><button class="danger" id="clearBtn">Clear all data</button></div>
+  <div class="notice"><b>Beta data notice:</b> Data stays in this browser session and is not sent to a server. Do not upload confidential, personal, customer or commercially sensitive information. Use sample or anonymised data only.</div>
+ </section>
+</div>
+
+<section class="panel result">
+ <h3>Why did profit or loss change?</h3>
+ <p class="hint">NERO compares each period with the previous period and ranks changes in revenue and costs. These are data-based indicators, not proof of cause.</p>
+ <div id="analysis"><div class="empty">Add at least two periods to see a comparison.</div></div>
+</section>
+
+<section class="panel" style="margin-top:14px">
+ <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><div><h3>Performance records</h3><p class="hint" style="margin:3px 0 0">Your imported and manually added periods.</p></div><span class="small" id="recordCount">0 records</span></div>
+ <div class="tablewrap" style="margin-top:12px"><table><thead><tr><th>Period</th><th>Revenue</th><th>Costs</th><th>Profit / loss</th><th>Clicks</th><th>Conversions</th></tr></thead><tbody id="records"><tr><td colspan="6" class="empty">No records added yet.</td></tr></tbody></table></div>
+</section>
+<p class="small" style="margin-top:18px">NERO Public Beta v1.2 · Calculations use the figures entered. Possible explanations are based only on available metrics. NERO does not establish causation, audit accounts, or replace professional financial advice.</p>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+let records=[];
+let currency='INR';
+const symbols={INR:'₹',USD:'$',EUR:'€',GBP:'£'};
+const num=n=>Number.isFinite(Number(n))?Number(n):0;
+const money=n=>symbols[currency]+num(n).toLocaleString('en-IN',{maximumFractionDigits:2});
+const fmtPct=n=>(n>=0?'+':'')+n.toFixed(1)+'%';
+function sorted(){return [...records].sort((a,b)=>a.period.localeCompare(b.period))}
+function profit(r){return r.revenue-r.costs}
+function pct(curr,prev){if(prev===0)return null;return ((curr-prev)/Math.abs(prev))*100}
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+const businessProfiles={
+ ecommerce:{name:'E-commerce / Online store',metrics:'Sessions, product views, add-to-cart rate, checkout completion, average order value, refunds, returns, stock-outs, customer acquisition cost.',checks:['Traffic by channel and campaign','Product/category sales mix and average order value','Add-to-cart and checkout drop-off','Refunds, returns, discounts and stock availability','Repeat-purchase rate and customer acquisition cost']},
+ performance:{name:'Performance marketing / Affiliate marketing',metrics:'Ad spend, impressions, clicks, CTR, CPC, conversions, conversion rate, CPA, ROAS, partner/publisher quality.',checks:['Spend, impressions, clicks and CTR by campaign','CPC and CPA changes by channel or partner','Conversion rate and conversion tracking changes','Traffic quality, invalid traffic and placement mix','Revenue or commission per partner and attribution window']},
+ retail:{name:'Retail / Physical store',metrics:'Footfall, transactions, conversion rate, average basket value, sales per store, inventory, shrinkage and returns.',checks:['Store footfall versus transactions','Average basket value and units per transaction','Sales by store, category and product','Stock-outs, wastage, shrinkage and returns','Promotions, local events and staffing hours']},
+ saas:{name:'SaaS / Software',metrics:'New MRR, expansion MRR, churned MRR, ARR, active users, trial-to-paid conversion, churn, retention and support costs.',checks:['New customers and trial-to-paid conversion','Customer churn and revenue churn','Expansion, downgrade and contraction revenue','Active usage and feature adoption','Hosting, support and customer acquisition costs']},
+ agency:{name:'Marketing / Creative / Professional agency',metrics:'Billable hours, utilisation, revenue per client, project margin, client retention, project delays and staff costs.',checks:['Revenue and margin by client or project','Billable versus available hours and utilisation','Scope creep, rework and project delays','Client renewals, cancellations and payment delays','Freelancer, payroll and software costs']},
+ services:{name:'Other services / Consultancy',metrics:'Leads, bookings, service completion, revenue per job, utilisation, repeat customers, cancellations and labour costs.',checks:['Lead-to-booking conversion','Bookings completed versus cancelled','Revenue and margin by service type','Staff utilisation and delivery capacity','Repeat customers, refunds and payment delays']},
+ food:{name:'Restaurant / Food / Hospitality',metrics:'Covers/orders, average order value, table turnover, food cost, wastage, delivery commissions, occupancy and repeat visits.',checks:['Customer count, covers or orders by channel','Average order value and menu-item mix','Food cost, wastage and supplier prices','Delivery-platform commissions and discounts','Occupancy, table turnover and repeat visits']},
+ manufacturing:{name:'Manufacturing',metrics:'Units produced, capacity utilisation, yield, defect rate, downtime, raw-material cost, inventory and on-time delivery.',checks:['Production volume versus capacity','Material cost and supplier price changes','Defect, scrap and rework rates','Machine downtime and labour productivity','Inventory levels and on-time delivery']},
+ subscription:{name:'Subscription business',metrics:'New subscribers, active subscribers, MRR, churn, renewal rate, average revenue per user and failed payments.',checks:['New subscriber additions','Cancellations and renewal rate','Failed payments and involuntary churn','Plan mix, upgrades and downgrades','Customer engagement and retention by cohort']},
+ marketplace:{name:'Marketplace / Platform',metrics:'Gross merchandise value, take rate, active buyers/sellers, match rate, transaction success, refunds and disputes.',checks:['Buyer and seller activity on both sides','Listings, match rate and transaction success','Take rate and revenue per transaction','Refunds, cancellations and disputes','Acquisition cost and repeat transaction rate']},
+ education:{name:'Education / Coaching',metrics:'Enquiries, enrolments, attendance, course completion, fee collection, renewals, student acquisition cost and refunds.',checks:['Enquiry-to-enrolment conversion','Attendance and course completion','Fee collection delays and refunds','Course or batch-wise revenue and costs','Renewals, referrals and student retention']},
+ healthcare:{name:'Healthcare / Clinic',metrics:'Appointments, attendance, cancellations, service mix, utilisation, billing, consumables and receivables.',checks:['Appointments booked versus attended','Cancellations and no-show rate','Revenue by service type','Room/equipment and staff utilisation','Consumable costs and pending receivables']},
+ logistics:{name:'Logistics / Delivery',metrics:'Shipments, on-time delivery, cost per shipment, fuel, route utilisation, failed deliveries, damage and claims.',checks:['Shipment volume and delivery success','Cost per shipment and fuel costs','Route and vehicle utilisation','Failed deliveries, delays and returns','Damage claims and service-level performance']},
+ realestate:{name:'Real estate',metrics:'Leads, site visits, bookings, deal conversion, sales cycle, commission, inventory ageing and marketing spend.',checks:['Lead-to-site-visit and visit-to-booking conversion','Property/project-wise enquiries and bookings','Sales cycle and deal cancellations','Marketing spend per qualified lead','Inventory ageing and commission costs']},
+ other:{name:'Other business',metrics:'Revenue by product/service, cost categories, customer volume, conversion, repeat business and operating capacity.',checks:['Revenue by product or service line','Largest cost categories and one-off expenses','Customer volume and conversion','Repeat customers and retention','Capacity, delivery delays and payment collection']}
+};
+function updateBusinessGuidance(){
+ const key=$('businessType')?.value||'other';
+ const profile=businessProfiles[key]||businessProfiles.other;
+ $('businessGuidance').innerHTML=`<strong>${profile.name}: metrics to track</strong><p>${profile.metrics}</p><strong style="margin-top:9px">Investigation checklist</strong><p>${profile.checks.map(x=>'• '+x).join('<br>')}</p><span class="small">These are recommended checks. Add these detailed metrics in a future data integration or category-specific import to let NERO analyse them automatically.</span>`;
+}
+$('businessType').addEventListener('change',()=>{updateBusinessGuidance();renderAnalysis(sorted())});
+updateBusinessGuidance();
+
+function render(){
+ const data=sorted(),last=data.at(-1),prev=data.at(-2);
+ if(last){currency=last.currency||currency;$('currency').value=currency}
+ const rev=last?last.revenue:0,cost=last?last.costs:0,p=last?profit(last):0,margin=rev?100*p/rev:null;
+ $('revenue').textContent=money(rev);$('costs').textContent=money(cost);$('profit').textContent=money(p);$('margin').textContent=margin===null?'—':margin.toFixed(1)+'%';
+ $('profit').className=p>0?'positive':p<0?'negative':'';
+ $('revenueChange').textContent=prev?changeText(last.revenue,prev.revenue):'Latest period';
+ $('costChange').textContent=prev?changeText(last.costs,prev.costs):'Latest period';
+ $('profitChange').textContent=prev?changeText(profit(last),profit(prev)):'Latest period';
+ $('recordCount').textContent=data.length+' record'+(data.length===1?'':'s');
+ $('records').innerHTML=data.length?data.map(r=>{let pr=profit(r);return `<tr><td>${escapeHTML(r.period)}</td><td>${money(r.revenue)}</td><td>${money(r.costs)}</td><td class="${pr>=0?'positive':'negative'}">${money(pr)}</td><td>${r.clicks??'—'}</td><td>${r.conversions??'—'}</td></tr>`}).join(''):'<tr><td colspan="6" class="empty">No records added yet.</td></tr>';
+ renderAnalysis(data);
+}
+function changeText(a,b){let d=a-b,pc=pct(a,b);return (d>=0?'+':'')+money(d)+(pc===null?' change':` (${fmtPct(pc)})`)}
+function insight(title,body){return `<div class="insight"><strong>${title}</strong><p>${body}</p></div>`}
+
+function analysisSection(title, subtitle, body){
+ return `<section class="analysis-section"><div class="section-heading"><strong>${title}</strong><span class="small">${subtitle}</span></div>${body}</section>`;
+}
+function renderAnalysis(data){
+ const el=$('analysis');
+ if(data.length<2){
+  el.innerHTML='<div class="empty">Add at least two periods to see a comparison.</div>';
+  return;
+ }
+ const a=data.at(-2),b=data.at(-1);
+ const pa=profit(a),pb=profit(b);
+ const revDelta=b.revenue-a.revenue;
+ const costDelta=b.costs-a.costs;
+ const profitDelta=pb-pa;
+ const marginA=a.revenue?100*pa/a.revenue:null;
+ const marginB=b.revenue?100*pb/b.revenue:null;
+ const moneyDelta=n=>(n>0?'+':'')+money(n);
+ const fact=(label,value,detail='')=>`<div class="insight"><strong>${label}</strong><p>${value}${detail?`<span class="small">${detail}</span>`:''}</p></div>`;
+ const status=pb>0?'PROFIT':pb<0?'LOSS':'BREAK-EVEN';
+ let changed='';
+ changed+=fact('Revenue',`${money(a.revenue)} → ${money(b.revenue)} (${moneyDelta(revDelta)})`);
+ changed+=fact('Total costs',`${money(a.costs)} → ${money(b.costs)} (${moneyDelta(costDelta)})`);
+ changed+=fact('Profit / loss',`${money(pa)} → ${money(pb)} (${moneyDelta(profitDelta)})`);
+ changed+=fact('Profit margin',`${marginA===null?'Not available':marginA.toFixed(1)+'%'} → ${marginB===null?'Not available':marginB.toFixed(1)+'%'}`);
+ let decomposition=`The recorded profit movement is explained arithmetically by revenue movement (${moneyDelta(revDelta)}) minus cost movement (${moneyDelta(costDelta)}).`;
+ changed+=fact('Profit movement breakdown',decomposition,'This reconciles the totals; it does not identify the underlying business cause.');
+ let hypotheses='';
+ if(revDelta<0)hypotheses+=fact('Revenue signal','Revenue fell in the latest period.','Possible areas to check: traffic volume, conversion rate, average order value, pricing, stock/availability, refunds and seasonality. These are hypotheses, not findings.');
+ else if(revDelta>0)hypotheses+=fact('Revenue signal','Revenue increased in the latest period.','Check whether the increase came from more traffic, a higher conversion rate, higher order value, pricing or a one-off event.');
+ else hypotheses+=fact('Revenue signal','Revenue was unchanged.','A stable total can still hide changes across channels, products or customer groups.');
+ if(costDelta>0)hypotheses+=fact('Cost signal','Costs increased.','Check cost categories, ad spend, fulfilment, discounts, staffing and one-off expenses.');
+ else if(costDelta<0)hypotheses+=fact('Cost signal','Costs decreased.','Check whether the reduction is sustainable and whether it affected service, volume or quality.');
+ else hypotheses+=fact('Cost signal','Total costs were unchanged.','A stable total can still hide shifts between individual cost categories.');
+ let investigate='';
+ if(a.clicks!=null&&b.clicks!=null){
+  const clickDelta=b.clicks-a.clicks;
+  investigate+=fact('Clicks',`${a.clicks.toLocaleString('en-IN')} → ${b.clicks.toLocaleString('en-IN')} (${clickDelta>=0?'+':''}${clickDelta.toLocaleString('en-IN')})`);
+ }else investigate+=fact('Traffic data missing','Clicks were not provided for both periods.','Add clicks or sessions to assess whether traffic volume changed.');
+ if(a.conversions!=null&&b.conversions!=null){
+  const convDelta=b.conversions-a.conversions;
+  investigate+=fact('Conversions',`${a.conversions.toLocaleString('en-IN')} → ${b.conversions.toLocaleString('en-IN')} (${convDelta>=0?'+':''}${convDelta.toLocaleString('en-IN')})`);
+  if(a.clicks>0&&b.clicks>0){
+   const rateA=100*a.conversions/a.clicks,rateB=100*b.conversions/b.clicks;
+   investigate+=fact('Conversion rate',`${rateA.toFixed(2)}% → ${rateB.toFixed(2)}% (${(rateB-rateA)>=0?'+':''}${(rateB-rateA).toFixed(2)} percentage points)`);
+   if(rateB<rateA)investigate+=fact('Next check','Conversion rate decreased.','Review traffic source mix, landing-page changes, checkout flow and conversion tracking before deciding what caused it.');
+   else if(rateB>rateA)investigate+=fact('Next check','Conversion rate increased.','Check whether the improvement is consistent across channels and whether tracking definitions stayed the same.');
+  }else investigate+=fact('Conversion rate unavailable','Clicks must be greater than zero in both periods to calculate a comparable conversion rate.');
+ }else investigate+=fact('Conversion data missing','Conversions were not provided for both periods.','Add conversion counts to distinguish traffic changes from conversion changes.');
+ if(pb<0)investigate+=fact('Priority review','Latest period recorded a loss of '+money(Math.abs(pb))+'.','Inspect the largest cost lines and the revenue segments contributing most to the decline.');
+ else if(profitDelta<0)investigate+=fact('Priority review','Profit decreased despite the latest result being '+(pb>0?'positive':'break-even')+'.','Check which revenue and cost categories account for the largest movement.');
+ else investigate+=fact('Priority review','Profit did not decrease.','Check whether the result is repeatable across more periods and whether any one-off factors affected it.');
+ const profile=businessProfiles[$('businessType')?.value||'other']||businessProfiles.other;
+ const categoryChecks=fact('Business-specific checks for '+profile.name,profile.checks.join(' • '),'These are suggested investigation areas, not findings from the uploaded figures. Detailed category-specific data is needed for NERO to test them.');
+ el.innerHTML=
+  `<div class="analysis-top"><span class="status ${pb>0?'profit':pb<0?'loss':'neutral'}">${status}</span> <span class="small">${escapeHTML(a.period)} → ${escapeHTML(b.period)} · ${escapeHTML(profile.name)}</span></div>`+
+  analysisSection('1. What changed?','Measured comparison',changed)+
+  analysisSection('2. Why might it have changed?','Possible explanations only',hypotheses)+
+  analysisSection('3. What should be investigated?','Next checks based on available data',investigate+categoryChecks)+
+  `<div class="notice"><strong>Data limitation:</strong> NERO compares the figures entered. Business-specific checks are recommendations only; this version does not yet ingest or analyse all industry-specific metrics automatically. It cannot prove causation or identify a specific campaign, partner, product or expense from total revenue and costs alone. More detailed, consistently categorised and authorised data is needed. Treat explanations as investigation prompts, not confirmed causes.</div>`;
+}
+
+function addRecord(r){
+ if(!r.period||!Number.isFinite(r.revenue)||!Number.isFinite(r.costs)||r.revenue<0||r.costs<0)throw Error('Enter a period, revenue and costs using non-negative numbers.');
+ if(records.some(x=>x.period===r.period))throw Error('That period already exists. Remove or update it before adding another.');
+ records.push(r);render();
+}
+$('addBtn').onclick=()=>{try{let r={period:$('period').value,revenue:Number($('revenueInput').value),costs:Number($('costInput').value),clicks:$('clicksInput').value===''?null:Number($('clicksInput').value),conversions:$('conversionsInput').value===''?null:Number($('conversionsInput').value),currency:$('currency').value};if(r.clicks!==null&&r.clicks<0||r.conversions!==null&&r.conversions<0)throw Error('Clicks and conversions cannot be negative.');addRecord(r);['revenueInput','costInput','clicksInput','conversionsInput'].forEach(id=>$(id).value='');}catch(e){alert(e.message)}};
+$('sampleBtn').onclick=()=>{records=[];currency=$('currency').value;records.push({period:'2026-01',revenue:150000,costs:118000,clicks:12000,conversions:510,currency},{period:'2026-02',revenue:132000,costs:126000,clicks:11500,conversions:390,currency},{period:'2026-03',revenue:145000,costs:119000,clicks:12300,conversions:465,currency});render()};
+function parseCSV(text){
+ const rows=[];let row=[],cell='',quoted=false;
+ for(let i=0;i<text.length;i++){let c=text[i],n=text[i+1];if(c==='"'&&quoted&&n==='"'){cell+='"';i++}else if(c==='"'){quoted=!quoted}else if(c===','&&!quoted){row.push(cell.trim());cell=''}else if((c==='\n'||c==='\r')&&!quoted){if(c==='\r'&&n==='\n')i++;row.push(cell.trim());if(row.some(x=>x!==''))rows.push(row);row=[];cell=''}else cell+=c}
+ row.push(cell.trim());if(row.some(x=>x!==''))rows.push(row);return rows;
+}
+$('csvFile').onchange=async e=>{let f=e.target.files[0];if(!f)return;try{let rows=parseCSV(await f.text());if(rows.length<2)throw Error('CSV needs a header row and at least one data row.');let headers=rows[0].map(x=>x.toLowerCase().replace(/[\s_-]+/g,''));let idx=n=>headers.indexOf(n);let ip=idx('period'),ir=idx('revenue'),ic=idx('costs');if(ip<0||ir<0||ic<0)throw Error('Required columns: period, revenue, costs.');let newRows=rows.slice(1).map((r,i)=>{let val=j=>j<0||r[j]===''?null:Number(String(r[j]).replace(/[₹$€£,\s]/g,''));let revenue=val(ir),costs=val(ic),clicks=val(idx('clicks')),conversions=val(idx('conversions'));if(!r[ip]||revenue===null||costs===null||!Number.isFinite(revenue)||!Number.isFinite(costs)||revenue<0||costs<0)throw Error('Invalid period, revenue or costs on CSV row '+(i+2)+'.');return{period:r[ip],revenue,costs,clicks,conversions,currency:$('currency').value}});let seen=new Set(records.map(x=>x.period));for(let r of newRows){if(seen.has(r.period))throw Error('Duplicate period found: '+r.period);seen.add(r.period)}records.push(...newRows);render();alert(newRows.length+' records imported.')}catch(err){alert(err.message)}e.target.value=''};
+$('exportBtn').onclick=()=>{if(!records.length){alert('No records to export.');return}let rows=[['period','revenue','costs','clicks','conversions','currency'],...sorted().map(r=>[r.period,r.revenue,r.costs,r.clicks??'',r.conversions??'',r.currency||currency])];let csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');let blob=new Blob([csv],{type:'text/csv'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='nero-performance-data.csv';a.click();URL.revokeObjectURL(url)};
+$('clearBtn').onclick=()=>{if(confirm('Clear all records from this page?')){records=[];render()}};
+render();
+</script>
+</body></html>
